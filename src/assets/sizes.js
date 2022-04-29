@@ -1,3 +1,6 @@
+import { Dimensions } from "react-native";
+const { width, height } = Dimensions.get("window");
+
 const sizes = {
   // global sizes
   small: 5,
@@ -15,6 +18,8 @@ const sizes = {
 
   body: 14,
   caption: 12,
+  width,
+  height
 };
 
 export default sizes;

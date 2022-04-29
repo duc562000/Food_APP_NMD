@@ -1,0 +1,6 @@
+module Pods_DCVCard_DCVCardTests {
+  umbrella header "Pods-DCVCard-DCVCardTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

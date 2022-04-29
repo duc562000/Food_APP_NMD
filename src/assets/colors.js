@@ -30,6 +30,13 @@ const colors = {
   unfilledColor: 'rgba(255, 255, 255, 0.5)',
   bgActive: '#DDEEFF',
   contentComment: '#DAE9FF',
+  burger:'rgba(228, 240, 223, 1)',
+  pizza:'rgba(251, 236, 205, 1)',
+  bbq:'rgba(230, 227, 242, 1)',
+  fruit:'rgba(246, 224, 213, 1)',
+  shushi:'rgba(220, 234, 243, 1)',
+  noodle:'rgba(247, 244, 244, 1)',
+
 
   colorBg: '#E8E8E8',
   accent: '#A60014',
@@ -54,6 +61,7 @@ const colors = {
   red: '#E3434F',
   red1: '#FA1E1E',
   bgMain: '#9EF8C9',
+  colorMain:'rgba(228,85,13,1)',
   brown: '#886327',
 };
 

@@ -10,9 +10,11 @@ import R from "../assets/R";
 import { colors, sizes } from "../assets/theme";
 import { getFontXD, HEIGHTXD, WIDTHXD } from "../Config/Functions";
 import LinearGradient from "react-native-linear-gradient";
+import Ionicons from "react-native-vector-icons/Ionicons"
+
 
 const Button = (props) => {
-  const { title, onPress, containerStyle, txtStyle, backgroundColor } = props;
+  const { title, onPress, containerStyle, txtStyle, backgroundColor,isIcon,iconName } = props;
   return (
     <TouchableOpacity
       style={[
@@ -22,7 +24,7 @@ const Button = (props) => {
           alignItems: "center",
           backgroundColor,
           borderRadius: 10,
-          marginVertical: HEIGHTXD(50),
+          marginVertical: HEIGHTXD(30),
           elevation: 2,
           shadowColor: "#000",
           shadowOffset: {
@@ -36,6 +38,14 @@ const Button = (props) => {
       ]}
       onPress={onPress}
     >
+      {isIcon ? 
+      (
+        <View style={{position:'absolute',left:10}}>
+          <Ionicons name={iconName} size={23} color={R.colors.color777} />
+        </View>
+      )
+        : null
+      }
       <Text
         style={[
           {

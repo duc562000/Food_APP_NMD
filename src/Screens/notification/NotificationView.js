@@ -6,7 +6,6 @@ import R from "../../assets/R";
 const NotificationView = (props) => {
   return (
     <View style={{ flex: 1, justifyContent: "center" }}>
-      <PickerAvatart />
     </View>
   );
 };

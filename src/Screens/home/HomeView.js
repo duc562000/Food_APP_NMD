@@ -1,78 +1,350 @@
-import React, { Component } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  SafeAreaView,
-} from "react-native";
+import React,{useEffect, useState} from "react";
+import { View, Text,ScrollView,TouchableOpacity,StyleSheet, FlatList,Image, ImageBackground, Modal } from "react-native";
+import ModalEnableLocation from "./SmallComponents/ModalEnableLocationComponent";
 import R from "../../assets/R";
-import { getFontXD, WIDTHXD, WIDTHXDICON } from "../../Config/Functions";
-import { useNavigation } from "@react-navigation/native";
-import SwiperComponent from "./SwiperComponent";
-import InputForm from "../../components/Input/InputForm";
+import { Searchbar } from 'react-native-paper';
+import Entypo from "react-native-vector-icons/Entypo"
+import Ionicons from "react-native-vector-icons/Ionicons"
+import { ButtonGroup } from '@rneui/themed'
+import { getWidth } from "../../Config/Functions";
+import StarReview from "../../components/StarReview/StarReview"
+import FoodMenu from "./SmallComponents/FoodMenu";
+import FoodNearMe from "./SmallComponents/FoodNearMe";
+import FoodBreakfast from "./SmallComponents/FoodBreakFast";
+import Button from "../../components/Button";
+import Header from "../../components/Header/Header";
+import { connect } from 'react-redux';
+import { increase,decrease } from "../../actions/CountAction";
 
-import PickerImg from "../../components/Picker/PickerImg";
 
 const HomeView = (props) => {
-  const navigation = useNavigation();
-  const { listItem, listItem2 } = props;
+  const historySearch = [
+    {
+      id:1,
+      name:'Hamsazda'
+    },
+    {
+      id:2,
+      name:'fdasfas'
+    },
+    {
+      id:3,
+      name:'asdsadsa'
+    },
+    {
+      id:4,
+      name:'weqweqw'
+    },
+    {
+      id:5,
+      name:'asdwqeqwewasda'
+    },
+  ]
+  const {
+    FoodTypeData,
+    searchQuery,
+    onChangeSearch,
+    selectedFoodType,
+    OnChangFoodType
+  } = props
+  const [modalSeacrh, setModalSearch] = useState(false);
+  const [search, setSearch ] = useState('');
+  const [filterData,setfilterData] = useState([]);
+  const [masterData,setmasterData] = useState ([]);
+  useEffect(() => {
+          const fetchData = async() =>{
+          setmasterData(historySearch)
+          };
+          fetchData();
+      },[]);
+  const serachFilter = (text) => {
+      let matches = []
+      if(text.length > 0){
+        matches = masterData.filter(i => {
+          const regax = new RegExp(`${text}`,'gi');
+          return i.name.match(regax)
+        })
+      }
+      console.log(matches)
+      setfilterData(matches)
+      setSearch(text)
+  }
+  console.log(props)
+  // console.log(historySearch)
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: R.colors.white,
-        paddingHorizontal: 10,
-      }}
-    >
-      <Text>Homeeeeee</Text>
+    <ScrollView showsVerticalScrollIndicator={false} style={{flex:1}}>
+      <View style={{ flex: 1,backgroundColor:R.colors.white}}>
+        <ModalEnableLocation />
+        <View>
+            <Button
+              title={'Search'}
+              backgroundColor={R.colors.gray5}
+              containerStyle={{
+                  height:50,
+                  marginHorizontal:15,
+                  borderRadius:15,
+                  alignItems:'flex-start',
+                  marginTop:70,
+              }}
+              txtStyle={{
+                  color:R.colors.color777,
+                  fontWeight:'400',
+                  left:55
+              }}
+              isIcon ={true}
+              iconName = {'md-search-outline'}
+              onPress = {() => setModalSearch(true)}
+            />
+            <Modal
+              animationType="fade"
+              transparent={false}
+              visible={modalSeacrh}
+            >
+              <ScrollView>
+                <View style={styles.centeredView}>
+                  <View style={{marginHorizontal:15,marginBottom:15}}>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                      <TouchableOpacity
+                        style={{ width: 35, height: 30}}
+                        onPress={() => setModalSearch(!modalSeacrh)}
+                      >
+                        <Ionicons name="chevron-back-outline" size={26} color="black" />
+                      </TouchableOpacity>
+                      <Searchbar
+                              placeholder="Search"
+                              onChangeText={(text) => serachFilter(text)}
+                              value={search}
+                              style={{
+                                width:290,
+                                marginLeft:35,
+                                backgroundColor:R.colors.gray5,
+                                borderWidth:0.1,
+                                height:50,
+                                borderRadius:15,shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 2,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 3.84,
+                              }}
+                        />
+                    </View>
+                    
+                    {
+                      filterData.length > 0 && (
+                        <FlatList
+                        data={filterData}
+                        renderItem={({item,index}) => {
+                          return(
+                                <View style={{backgroundColor:'#ccc'}}>
+                                  <Text style={styles.modalText}>{item.name}</Text>
+                                </View>
+                          ) }}
+                        showsVerticalScrollIndicator={false}
+                        keyExtractor={item => item.id}
+                        />
+                      )
+                      
+                    }
+                  </View>
+                  <View>
+                    <View style={{
+                      flexDirection:'row',
+                      justifyContent:'space-between',
+                      paddingHorizontal:15,
+                      paddingVertical:15
+                      }}>
+                        <Text style={styles.txtGray}>🕒  Search history</Text>
+                        <TouchableOpacity>
+                          <Text style={[styles.txtGray,{fontSize:15}]}>Clear all</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <FlatList
+                      scrollEnabled={false}
+                      data={historySearch}
+                      pagingEnabled
+                      showsHorizontalScrollIndicator={false}
+                      keyExtractor={item => item.id}
+                      renderItem={({item,index}) => {
+                        return(
+                          <View style={{
+                            flexDirection:'row',
+                            alignItems:'center',
+                            justifyContent:'space-between',
+                            paddingHorizontal:15
+                            }}>
+                              <TouchableOpacity>
+                                <Text style={[styles.txt,{paddingVertical:10,fontWeight:"300"}]}>{item.name}</Text>
+                              </TouchableOpacity>
+                              <TouchableOpacity>
+                                <Ionicons style={{color:R.colors.color777}} name="close-outline" size={23} color="black" />
+                              </TouchableOpacity>
+                          </View>
+                        )
+                      }}
+                    />
+                    <Text style={styles.txtTitle}>Popular</Text>
+                    <FoodBreakfast
+                      data={FoodTypeData[1].menuBreakfast}
+                    />
+                  </View>
+                </View>
+              </ScrollView>
+            </Modal>
+            
+            <TouchableOpacity
+              style={{
+                flexDirection:'row',
+                paddingHorizontal:15,
+                paddingVertical:20,
+                alignItems:'center',
+              }}
+            >
+              <Entypo style={{paddingRight:10}} name="location" size={23} color="black" />
+              <Text style={styles.txt}>9 West 46th Street,New York city</Text>
+            </TouchableOpacity>
 
-      <PickerImg 
+            <FlatList
+              data={FoodTypeData}
+              horizontal
+              pagingEnabled
+              scrollEnabled
+              snapToAlignment='center'
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={item => item.id}
+              renderItem={({item,index}) => {
+                  return(
+                      <View
+                        style={{flexDirection:'column',alignItems:"center"}}
+                      >
+                        <TouchableOpacity
+                          style={[
+                            styles.btnType,
+                            {backgroundColor:selectedFoodType ?.id === item.id ? R.colors.colorMain : R.colors.gray4}
+                          ]}
+                          key={item.id} 
+                          onPress={() => OnChangFoodType(item)}
+                        >
+                          <Image 
+                          style={[
+                            styles.img,
+                            {tintColor:selectedFoodType ?.id === item.id ? R.colors.white : R.colors.black}
+                          ]} 
+                          source={item.img}/>
+                        </TouchableOpacity>
+                        <Text style={styles.txt}>{item.type}</Text>
+                      </View>
+                )
+              }}
+            />
+            <Text style={styles.txtTitle}>{selectedFoodType?.type} Menu</Text>
+            <FoodMenu
+              data={selectedFoodType?.menuFood}
+            />
+            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+              <Text style={styles.txtTitle}>Near me</Text>
+              <TouchableOpacity>
+                <Text style={[styles.txtweight,
+                  {paddingHorizontal:15,paddingVertical:20,}
+                  ]}>See all</Text>
+              </TouchableOpacity>
+            </View>
+            <FoodNearMe
+              data={selectedFoodType?.menuNearMe}
+            />
+            <ImageBackground
+              source={R.images.bgHambergerDiscount}
+              style={styles.bg}
+            />
+            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+              <Text style={styles.txtTitle}>For breakfast</Text>
+              <TouchableOpacity>
+                <Text style={[styles.txtweight,
+                  {paddingHorizontal:15,paddingVertical:20}
+                ]}>See all</Text>
+              </TouchableOpacity>
+            </View>
+            <FoodBreakfast
+              data={selectedFoodType?.menuBreakfast}
+            />
+          </View>
+        </View>
         
-      />
-
-      <InputForm title={"Ten dang nhap"} />
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  imgIcon: {
-    width: WIDTHXDICON(150),
-    height: WIDTHXDICON(150),
+  txt:{
+    fontSize:15,
+    color:R.colors.black
   },
-  containerItem: {
-    width: WIDTHXDICON(170),
-    height: WIDTHXDICON(170),
-    borderRadius: WIDTHXD(30),
-    marginHorizontal: WIDTHXD(20),
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: R.colors.white,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 1.84,
-    elevation: 2,
+  txtGray:{
+    fontSize:13,
+    color:R.colors.color777
   },
-  txtTitle: {
-    fontSize: getFontXD(36),
-    marginTop: 5,
-    textAlign: "center",
-    maxWidth: WIDTHXD(220),
+  btnType:{
+    width:80,
+    height:80,
+    marginBottom:10,
+    borderRadius:20,
+    marginHorizontal:15,
+    backgroundColor:'#ccc',
+    alignItems:'center',
+    justifyContent:'center'
   },
-  txtHeader: {
-    color: R.colors.orange,
-    fontSize: getFontXD(36),
-    marginTop: 5,
-    marginHorizontal: WIDTHXD(40),
-    marginVertical: WIDTHXD(40),
+  img:{
+    width:45,
+    height:45,
   },
-});
+  txtTitle:{
+    fontSize:22,
+    fontWeight:'600',
+    color:R.colors.black,
+    paddingHorizontal:15,
+    paddingVertical:20
+  },
+  btnFood:{
+    overflow:'hidden',
+    width:120,
+    height:120,
+    borderRadius:20,
+    marginHorizontal:15,
+    alignItems:'center',
+    justifyContent:'center',
+    marginVertical:10,
+  },
+  txtweight:{
+    fontSize:15,
+    fontWeight:'500',
+    color:R.colors.black
+  },
+  bg:{
+    width:'100%',
+    height:150,
+    resizeMode:'cover',
+    marginVertical:15,
+  },
+  centeredView: {
+    flex: 1,
+    paddingTop:70,
+    backgroundColor:R.colors.white
+  },
+  modalView: {
+    backgroundColor:R.colors.white
+  },
+  textStyle: {
+    color:R.colors.color777,
+    fontSize:16,
+    textAlign:'center',
+    paddingVertical:25
+  },
+})
 
-export default HomeView;
+const mapStateToProps = (state) => {
+  return {
+    count : state.CountReaducer
+  };
+};
+export default connect(mapStateToProps, {increase,decrease})(HomeView);
