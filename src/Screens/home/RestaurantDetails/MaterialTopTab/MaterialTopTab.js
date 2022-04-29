@@ -11,7 +11,7 @@ const Tab = createMaterialTopTabNavigator();
 
 
 function MaterialTopTab(props) {
-    const {dataRestaurant} = props
+    const {data} = props
   return (
     <Tab.Navigator
         swipeEnabled
@@ -48,15 +48,15 @@ function MaterialTopTab(props) {
     >
       <Tab.Screen 
             name="Order" 
-            children={() => <MaterialTopTabView type={'Order'}/>}
+            children={() => <MaterialTopTabView data={data} type={'Order'}/>}
         />
       <Tab.Screen 
             name="Review" 
-            children={() => <MaterialTopTabView type={'Review'}/>}
+            children={() => <MaterialTopTabView data={data} type={'Review'}/>}
         />
       <Tab.Screen 
             name="Information" 
-            children={() => <MaterialTopTabView type={"Information"}/>}
+            children={() => <MaterialTopTabView data={data} type={"Information"}/>}
         />
     </Tab.Navigator>
   );

@@ -77,9 +77,9 @@ const RestaurantDetailsView = (props) => {
                             <Text style={styles.txtGray}> · {dataRestaurant.review} Reviews</Text>
                         </View>
                     </View>
-                    {/* <MaterialTopTab
+                    <MaterialTopTab
                         data={dataRestaurant}
-                    /> */}
+                    />
                 </ScrollView>
             </View>    
         </>

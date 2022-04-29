@@ -27,7 +27,7 @@ function MyStack(props) {
         headerStatusBarHeight: 0,
       }}
       headerMode={"none"}
-      initialRouteName={ScreenName.CHANGE_PASS_SCREEN}
+      initialRouteName={ScreenName.TABNAVIGATOR}
     >
       <Stack.Screen name={ScreenName.LOGINSCREEN} component={Login} />
       <Stack.Screen name={ScreenName.TABNAVIGATOR} component={TabNavigator} />

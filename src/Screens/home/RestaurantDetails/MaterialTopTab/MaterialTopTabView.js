@@ -9,24 +9,24 @@ import Count from '../../../../components/Count/Count';
 import StarReview from '../../../../components/StarReview/StarReview';
 import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
-import { increaseItem,decreaseItem } from '../../../../actions/MyCartAction';
+import { addCart,increaseItem } from '../../../../actions/MyCartAction';
+
 
 const MaterialTopTabView = (props) => {
   const navigate = useNavigation();
-  const {data,type} = props
+  const {data,type,product,addCart} = props
   const [selectedFood,setSelectedFood] = useState(null)
   const [minus,setMinus] = useState(false)
-  // const [count, setCount] = useState(0);
-  // const onClickCount = (value,item,index) => {
-  //   setSelectedFood(item)
-  //   if (value === "+" && selectedFood) {
-  //     setCount(count+1)
-  //   } else if (value === "-" ) {
-  //     setCount(count-1)
-  //   }
-  //   console.log("sasdsa",index);
+  const [count, setCount] = useState(0);
+  const onClickCount = (value,item,index) => {
+    setSelectedFood(item)
+    if (value === "+" && selectedFood) {
+      setCount(count+1)
+    } else if (value === "-" ) {
+      setCount(count-1)
+    }
     
-  // }
+  }
   const [textShown, setTextShown] = useState(false); //To show ur remaining Text
   const [lengthMore,setLengthMore] = useState(false); //to show the "Read more & Less Line"
   const toggleNumberOfLines = () => { //To toggle the show text or hide it
@@ -37,14 +37,14 @@ const MaterialTopTabView = (props) => {
       setLengthMore(e.nativeEvent.lines.length >=3); //to check the text is more than 4 lines or not
       // console.log(e.nativeEvent);
   },[]);
-  console.log(props.count.numberItem)
+  console.log(product)
   return (
       <View style={{flex:1,backgroundColor:R.colors.white}}>
         {type == "Order" && (
           <>
           <FlatList
             scrollEnabled={true}
-            data={data.food}
+            data={product?.products}
             pagingEnabled
             showsHorizontalScrollIndicator={false}
             keyExtractor={item => item.id}
@@ -87,20 +87,27 @@ const MaterialTopTabView = (props) => {
                           <Text style={styles.txtPrice}>${item.price}</Text>
                         </View>
                         <View style ={{flexDirection:'row',alignItems:'center'}}>
-                          {/* {props.count.numberItem > 0 && ( */}
+                          {product.cart.map((i) => {
+                            if (item.id === i.id) {
+                              return (
                             <>
-                              <TouchableOpacity
-                                style={{padding:5}}
-                                onPress={() => props.increaseItem()}
-                              >
-                                <Ionicons name="remove-sharp" size={24} color="black" />
-                              </TouchableOpacity>                        
-                              <Text style={[styles.txt,{padding:10}]}>{props.count.numberItem}</Text>
-                              
+                              {i.count > 0 && (
+                                <>
+                                  <TouchableOpacity
+                                    style={{padding:5}}
+                                    // onPress={() => props.increaseItem(i.id)}
+                                  >
+                                    <Ionicons name="remove-sharp" size={24} color="black" />
+                                  </TouchableOpacity>                        
+                                  <Text style={[styles.txt,{padding:10}]}>{i.count}</Text>
+                                </>
+                               )}
                             </>
-                          
+                              )
+                            }
+                            })}
                           <TouchableOpacity
-                            onPress={() => console.log(props.increaseItem())}
+                            onPress={() => addCart(item)}
                           >
                               <Ionicons name="add-circle" size={24} color={R.colors.colorMain} />
                           </TouchableOpacity>
@@ -110,22 +117,22 @@ const MaterialTopTabView = (props) => {
               )
                       }}
           />
-          {props.count.numberItem > 0 &&
+          {product.cart?.length > 0 &&
             <TouchableOpacity
               style={styles.popup}
               onPress={() => navigate.navigate(MY_CART_SCREEN)}
             >
-              <SimpleLineIcons name="handbag" size={24} color={R.colors.white} />
+              <SimpleLineIcons style={{top:8}} name="handbag" size={24} color={R.colors.white} />
               <View style={{
                 backgroundColor:R.colors.white,
                 alignSelf:'center',
                 borderRadius:20,
                 width:18,
                 height:18,
-                top:-10,
+                top:-5,
                 right:-10
                 }}>
-                <Text style={styles.txtCountPopup}>{props.count}</Text>
+                <Text style={styles.txtCountPopup}>{product.cart.length}</Text> 
               </View>
             </TouchableOpacity>
           }
@@ -317,9 +324,14 @@ const styles= StyleSheet.create({
   }
 })
 
+
 const mapStateToProps = (state) => {
   return {
-    count : state.MyCartReducer
+    product: state.MyCartReaducer,
   };
 };
-export default connect(mapStateToProps, {increaseItem,decreaseItem})(MaterialTopTabView);
+
+export default connect(mapStateToProps, {
+  addCart,
+  increaseItem,
+})(MaterialTopTabView)

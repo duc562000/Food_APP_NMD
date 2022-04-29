@@ -16925,7 +16925,7 @@
 			buildConfigurationList = E04BC30694496FB2310DCE0637068345 /* Build configuration list for PBXNativeTarget "FBReactNativeSpec" */;
 			buildPhases = (
 				0A6C3735A43FC05D523509FB801B9D69 /* Headers */,
-				EC9908012E203BC9B9DDF80DD75616B3 /* [CP-User] Generate Specs */,
+				4FE1BDA75EF8F017F0C5AFD0CD1C3875 /* [CP-User] Generate Specs */,
 				269D9A228E87459E5980D884A9C5FAEB /* Sources */,
 				AC013DEC88472AC24C7F5E1674371CCD /* Frameworks */,
 			);
@@ -17525,6 +17525,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4FE1BDA75EF8F017F0C5AFD0CD1C3875 /* [CP-User] Generate Specs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"/Users/apple/Food_APP_NMD_fix/node_modules/react-native/scripts/../Libraries",
+			);
+			name = "[CP-User] Generate Specs";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/codegen-FBReactNativeSpec.log",
+				"/Users/apple/Food_APP_NMD_fix/node_modules/react-native/scripts/../React/FBReactNativeSpec/FBReactNativeSpec/FBReactNativeSpec.h",
+				"/Users/apple/Food_APP_NMD_fix/node_modules/react-native/scripts/../React/FBReactNativeSpec/FBReactNativeSpec/FBReactNativeSpec-generated.mm",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -o pipefail\n\nbash -l -c 'SRCS_DIR=/Users/apple/Food_APP_NMD_fix/node_modules/react-native/scripts/../Libraries CODEGEN_MODULES_OUTPUT_DIR=/Users/apple/Food_APP_NMD_fix/node_modules/react-native/scripts/../React/FBReactNativeSpec/FBReactNativeSpec CODEGEN_MODULES_LIBRARY_NAME=FBReactNativeSpec /Users/apple/Food_APP_NMD_fix/node_modules/react-native/scripts/generate-specs.sh' 2>&1 | tee \"${SCRIPT_OUTPUT_FILE_0}\"";
+		};
 		DAD2C0B688E728882793AD0677504ECC /* Copy generated compatibility header */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -17548,24 +17566,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "COMPATIBILITY_HEADER_PATH=\"${BUILT_PRODUCTS_DIR}/Swift Compatibility Header/${PRODUCT_MODULE_NAME}-Swift.h\"\nMODULE_MAP_PATH=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_MODULE_NAME}.modulemap\"\n\nditto \"${DERIVED_SOURCES_DIR}/${PRODUCT_MODULE_NAME}-Swift.h\" \"${COMPATIBILITY_HEADER_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/YogaKit/YogaKit.modulemap\" \"${MODULE_MAP_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/YogaKit/YogaKit-umbrella.h\" \"${BUILT_PRODUCTS_DIR}\"\nprintf \"\\n\\nmodule ${PRODUCT_MODULE_NAME}.Swift {\\n  header \\\"${COMPATIBILITY_HEADER_PATH}\\\"\\n  requires objc\\n}\\n\" >> \"${MODULE_MAP_PATH}\"\n";
-		};
-		EC9908012E203BC9B9DDF80DD75616B3 /* [CP-User] Generate Specs */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"/Users/apple/ProjectsStudy/Food_App_NMD/node_modules/react-native/scripts/../Libraries",
-			);
-			name = "[CP-User] Generate Specs";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/codegen-FBReactNativeSpec.log",
-				"/Users/apple/ProjectsStudy/Food_App_NMD/node_modules/react-native/scripts/../React/FBReactNativeSpec/FBReactNativeSpec/FBReactNativeSpec.h",
-				"/Users/apple/ProjectsStudy/Food_App_NMD/node_modules/react-native/scripts/../React/FBReactNativeSpec/FBReactNativeSpec/FBReactNativeSpec-generated.mm",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -o pipefail\n\nbash -l -c 'SRCS_DIR=/Users/apple/ProjectsStudy/Food_App_NMD/node_modules/react-native/scripts/../Libraries CODEGEN_MODULES_OUTPUT_DIR=/Users/apple/ProjectsStudy/Food_App_NMD/node_modules/react-native/scripts/../React/FBReactNativeSpec/FBReactNativeSpec CODEGEN_MODULES_LIBRARY_NAME=FBReactNativeSpec /Users/apple/ProjectsStudy/Food_App_NMD/node_modules/react-native/scripts/generate-specs.sh' 2>&1 | tee \"${SCRIPT_OUTPUT_FILE_0}\"";
 		};
 		F4114027B532CDBB43B4F6F1AC9E182D /* [CP] Copy XCFrameworks */ = {
 			isa = PBXShellScriptBuildPhase;
