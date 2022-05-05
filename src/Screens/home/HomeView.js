@@ -40,6 +40,7 @@ const HomeView = (props) => {
       name:'asdwqeqwewasda'
     },
   ]
+  
   const {
     FoodTypeData,
     searchQuery,
@@ -47,13 +48,14 @@ const HomeView = (props) => {
     selectedFoodType,
     OnChangFoodType
   } = props
+  const menuFood = FoodTypeData[1].menuFood
   const [modalSeacrh, setModalSearch] = useState(false);
   const [search, setSearch ] = useState('');
   const [filterData,setfilterData] = useState([]);
   const [masterData,setmasterData] = useState ([]);
   useEffect(() => {
           const fetchData = async() =>{
-          setmasterData(historySearch)
+          setmasterData(menuFood)
           };
           fetchData();
       },[]);
@@ -62,17 +64,15 @@ const HomeView = (props) => {
       if(text.length > 0){
         matches = masterData.filter(i => {
           const regax = new RegExp(`${text}`,'gi');
-          return i.name.match(regax)
+          return i.type.match(regax)
         })
       }
       console.log(matches)
       setfilterData(matches)
       setSearch(text)
   }
-  console.log(props)
-  // console.log(historySearch)
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={{flex:1}}>
+    <ScrollView showsVerticalScrollIndicator={false} style={{flex:1,backgroundColor:R.colors.white}}>
       <View style={{ flex: 1,backgroundColor:R.colors.white}}>
         <ModalEnableLocation />
         <View>
@@ -100,7 +100,7 @@ const HomeView = (props) => {
               transparent={false}
               visible={modalSeacrh}
             >
-              <ScrollView>
+              
                 <View style={styles.centeredView}>
                   <View style={{marginHorizontal:15,marginBottom:15}}>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -115,8 +115,8 @@ const HomeView = (props) => {
                               onChangeText={(text) => serachFilter(text)}
                               value={search}
                               style={{
-                                width:290,
-                                marginLeft:35,
+                                width:315,
+                                marginLeft:10,
                                 backgroundColor:R.colors.gray5,
                                 borderWidth:0.1,
                                 height:50,
@@ -132,65 +132,73 @@ const HomeView = (props) => {
                     </View>
                     
                     {
-                      filterData.length > 0 && (
+                      search ? (
                         <FlatList
+                        style={{marginTop:10}}
                         data={filterData}
-                        renderItem={({item,index}) => {
+                        renderItem={({item}) => {
                           return(
-                                <View style={{backgroundColor:'#ccc'}}>
-                                  <Text style={styles.modalText}>{item.name}</Text>
-                                </View>
+                            <View
+                            style={{
+                              marginVertical:5,
+                              alignItems:'center'
+                            }}
+                          >
+                            <Text
+                                style={styles.txtSearch}
+                              >{item.type}
+                            </Text>
+                          </View>
                           ) }}
                         showsVerticalScrollIndicator={false}
                         keyExtractor={item => item.id}
                         />
+                      ) : (
+                        <View>
+                          <View style={{
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            paddingVertical:15
+                            }}>
+                              <Text style={styles.txtGray}>🕒  Search history</Text>
+                              <TouchableOpacity>
+                                <Text style={[styles.txtGray,{fontSize:15}]}>Clear all</Text>
+                              </TouchableOpacity>
+                          </View>
+                          <FlatList
+                            scrollEnabled={false}
+                            data={historySearch}
+                            pagingEnabled
+                            showsHorizontalScrollIndicator={false}
+                            keyExtractor={item => item.id}
+                            renderItem={({item,index}) => {
+                              return(
+                                <View style={{
+                                  flexDirection:'row',
+                                  alignItems:'center',
+                                  justifyContent:'space-between',
+                                  }}>
+                                    <TouchableOpacity>
+                                      <Text style={[styles.txt,{paddingVertical:10,fontWeight:"300"}]}>{item.name}</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity>
+                                      <Ionicons style={{color:R.colors.color777}} name="close-outline" size={23} color="black" />
+                                    </TouchableOpacity>
+                                </View>
+                              )
+                            }}
+                          />
+                            <Text style={[styles.txtTitle,{paddingHorizontal:0}]}>Popular</Text>
+                            <FoodBreakfast
+                              data={FoodTypeData[1].menuBreakfast}
+                            />
+                        </View>
                       )
                       
                     }
                   </View>
-                  <View>
-                    <View style={{
-                      flexDirection:'row',
-                      justifyContent:'space-between',
-                      paddingHorizontal:15,
-                      paddingVertical:15
-                      }}>
-                        <Text style={styles.txtGray}>🕒  Search history</Text>
-                        <TouchableOpacity>
-                          <Text style={[styles.txtGray,{fontSize:15}]}>Clear all</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <FlatList
-                      scrollEnabled={false}
-                      data={historySearch}
-                      pagingEnabled
-                      showsHorizontalScrollIndicator={false}
-                      keyExtractor={item => item.id}
-                      renderItem={({item,index}) => {
-                        return(
-                          <View style={{
-                            flexDirection:'row',
-                            alignItems:'center',
-                            justifyContent:'space-between',
-                            paddingHorizontal:15
-                            }}>
-                              <TouchableOpacity>
-                                <Text style={[styles.txt,{paddingVertical:10,fontWeight:"300"}]}>{item.name}</Text>
-                              </TouchableOpacity>
-                              <TouchableOpacity>
-                                <Ionicons style={{color:R.colors.color777}} name="close-outline" size={23} color="black" />
-                              </TouchableOpacity>
-                          </View>
-                        )
-                      }}
-                    />
-                    <Text style={styles.txtTitle}>Popular</Text>
-                    <FoodBreakfast
-                      data={FoodTypeData[1].menuBreakfast}
-                    />
-                  </View>
+                  
                 </View>
-              </ScrollView>
             </Modal>
             
             <TouchableOpacity
@@ -280,6 +288,11 @@ const styles = StyleSheet.create({
     fontSize:15,
     color:R.colors.black
   },
+  txtSearch:{
+    fontSize:16,
+    fontWeight:'500',
+    color:R.colors.black
+  },
   txtGray:{
     fontSize:13,
     color:R.colors.color777
@@ -302,8 +315,8 @@ const styles = StyleSheet.create({
     fontSize:22,
     fontWeight:'600',
     color:R.colors.black,
-    paddingHorizontal:15,
-    paddingVertical:20
+    paddingVertical:20,
+    paddingHorizontal:15
   },
   btnFood:{
     overflow:'hidden',
@@ -340,6 +353,15 @@ const styles = StyleSheet.create({
     textAlign:'center',
     paddingVertical:25
   },
+  btnFoodBreakfast:{
+    marginHorizontal:15,
+    marginVertical:10,
+},
+imgFoodBreakFast:{
+    width:80,
+    height:80,
+    borderRadius:20
+},
 })
 
 const mapStateToProps = (state) => {

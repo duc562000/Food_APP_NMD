@@ -12,39 +12,32 @@ const Tab = createMaterialTopTabNavigator();
 
 function MaterialTopTab(props) {
     const {data} = props
+  
   return (
     <Tab.Navigator
-        swipeEnabled
-        tabBarOptions={{
-            inactiveTintColor: R.colors.gray1,
-            activeTintColor: R.colors.main,
-            pressOpacity: 1,
-            labelStyle: {
-            fontSize: 18,
-            textTransform: 'none',
-            fontWeight: 'bold',
-        },
-        
-        labelStyle: { fontSize: 16,fontWeight:"600", textTransform: "none" },
-         style: {
-            width: '90%',
-            fontSize: 18
-            // borderBottomColor: 'red',
-            // borderBottomWidth: 0,  
-        },
-        indicatorStyle: {
-            backgroundColor: R.colors.main,
-            height: 6,
-            bottom: 0,
-            borderRadius:10,
-            width:6,
-            left:"16%",
-        },
-        tabStyle: {
-        }
-            
-        }}
-        
+      screenOptions={{
+        tabBarInactiveTintColor: R.colors.gray1,
+        tabBarActiveTintColor: R.colors.colorMain,
+        tabBarPressOpacity: 1,
+        tabBarLabelStyle: {
+        fontSize: 18,
+        textTransform: 'none',
+        fontWeight: 'bold',
+      },
+      tabBarLabelStyle: { fontSize: 16,fontWeight:"600", textTransform: "none" },
+      tabBarStyle: {
+          width: '90%',
+          fontSize: 18
+      },
+      tabBarIndicatorStyle: {
+          backgroundColor: R.colors.colorMain,
+          height: 6,
+          bottom: 0,
+          borderRadius:10,
+          width:6,
+          left:"16%",
+      }, 
+      }}
     >
       <Tab.Screen 
             name="Order" 

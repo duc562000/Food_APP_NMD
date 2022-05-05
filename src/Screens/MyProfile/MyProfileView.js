@@ -17,12 +17,12 @@ const MyProfileView = (props) => {
         console.log(data)
     }
     return (
-        <View style={{ flex: 1}}>
+        <View style={{ flex: 1,backgroundColor:R.colors.white}}>
             <Header
                 title='My Profile'
                 isBack={true}
                 styleTitle={{
-                    fontSize:25,
+                    fontSize:22,
                     textTransform:'none',
                     textAlign: "left",
                     paddingHorizontal:15,
@@ -55,9 +55,18 @@ const MyProfileView = (props) => {
                             error={errors.name}
                             containerStyle ={{
                                 paddingVertical: 0,
-                                paddingHorizontal: 0,
-                                backgroundColor:'#fff',
-                                width:200
+                                paddingHorizontal: 10,
+                                backgroundColor:R.colors.gray5,
+                                width:200,
+                                borderWidth:0.1,
+                                borderRadius:5,
+                                shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 2,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 3.84,
                             }}
                             
                             />
@@ -83,9 +92,18 @@ const MyProfileView = (props) => {
                             error={errors.phoneNumber}
                             containerStyle ={{
                                 paddingVertical: 0,
-                                paddingHorizontal: 0,
-                                backgroundColor:'#fff',
-                                width:200
+                                paddingHorizontal: 10,
+                                backgroundColor:R.colors.gray5,
+                                width:200,
+                                borderWidth:0.1,
+                                borderRadius:5,
+                                shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 2,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 3.84,
                             }}
                             
                             />
@@ -111,9 +129,18 @@ const MyProfileView = (props) => {
                             error={errors.email}
                             containerStyle ={{
                                 paddingVertical: 0,
-                                paddingHorizontal: 0,
-                                backgroundColor:'#fff',
-                                width:200
+                                paddingHorizontal: 10,
+                                backgroundColor:R.colors.gray5,
+                                width:200,
+                                borderWidth:0.1,
+                                borderRadius:5,
+                                shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 2,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 3.84,
                             }}
                             
                             />
@@ -139,9 +166,18 @@ const MyProfileView = (props) => {
                             error={errors.address}
                             containerStyle ={{
                                 paddingVertical: 0,
-                                paddingHorizontal: 0,
-                                backgroundColor:'#fff',
-                                width:200
+                                paddingHorizontal: 10,
+                                backgroundColor:R.colors.gray5,
+                                width:200,
+                                borderWidth:0.1,
+                                borderRadius:5,
+                                shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 2,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 3.84,
                             }}
                             
                             />

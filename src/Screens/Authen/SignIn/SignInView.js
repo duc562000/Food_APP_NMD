@@ -7,6 +7,8 @@ import TextForm from "../../../components/Input/InputForm";
 import Button from "../../../components/Button";
 import Entypo from "react-native-vector-icons/Entypo"
 import Header from "../../../components/Header/Header";
+import { useNavigation } from "@react-navigation/native";
+
 
 
 const SignInView = (props) => {
@@ -16,6 +18,7 @@ const SignInView = (props) => {
         formState: { errors },
       } = useForm();
     const {onSubmit} = props
+    const navigate = useNavigation();
     return (
         <>
             <StatusBar barStyle="dark-content"/>

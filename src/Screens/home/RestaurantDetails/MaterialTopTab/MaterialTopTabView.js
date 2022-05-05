@@ -5,50 +5,37 @@ import { MY_CART_SCREEN, RESTAURANTDETAILSCREEN } from '../../../../routers/Scre
 import Ionicons from "react-native-vector-icons/Ionicons"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons"
-import Count from '../../../../components/Count/Count';
 import StarReview from '../../../../components/StarReview/StarReview';
 import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
-import { addCart,increaseItem } from '../../../../actions/MyCartAction';
+import { addCart,decreaseItem,increaseItem } from '../../../../actions/MyCartAction';
+
 
 
 const MaterialTopTabView = (props) => {
   const navigate = useNavigation();
   const {data,type,product,addCart} = props
-  const [selectedFood,setSelectedFood] = useState(null)
-  const [minus,setMinus] = useState(false)
-  const [count, setCount] = useState(0);
-  const onClickCount = (value,item,index) => {
-    setSelectedFood(item)
-    if (value === "+" && selectedFood) {
-      setCount(count+1)
-    } else if (value === "-" ) {
-      setCount(count-1)
-    }
-    
-  }
-  const [textShown, setTextShown] = useState(false); //To show ur remaining Text
-  const [lengthMore,setLengthMore] = useState(false); //to show the "Read more & Less Line"
-  const toggleNumberOfLines = () => { //To toggle the show text or hide it
+  const [textShown, setTextShown] = useState(false); 
+  const [lengthMore,setLengthMore] = useState(false); 
+  const toggleNumberOfLines = () => { 
       setTextShown(!textShown);
   }
 
   const onTextLayout = useCallback(e =>{
-      setLengthMore(e.nativeEvent.lines.length >=3); //to check the text is more than 4 lines or not
-      // console.log(e.nativeEvent);
+      setLengthMore(e.nativeEvent.lines.length >=3); 
   },[]);
-  console.log(product)
   return (
       <View style={{flex:1,backgroundColor:R.colors.white}}>
         {type == "Order" && (
           <>
           <FlatList
             scrollEnabled={true}
-            data={product?.products}
+            data={data.food}
             pagingEnabled
             showsHorizontalScrollIndicator={false}
             keyExtractor={item => item.id}
             renderItem={({item,index}) => {
+              // console.log(item);
                 return(
                     <View
                       style={{
@@ -87,15 +74,16 @@ const MaterialTopTabView = (props) => {
                           <Text style={styles.txtPrice}>${item.price}</Text>
                         </View>
                         <View style ={{flexDirection:'row',alignItems:'center'}}>
-                          {product.cart.map((i) => {
+                          {product.cart.map((i,index) => {
                             if (item.id === i.id) {
                               return (
                             <>
                               {i.count > 0 && (
                                 <>
                                   <TouchableOpacity
+                                    key={index}
                                     style={{padding:5}}
-                                    // onPress={() => props.increaseItem(i.id)}
+                                    onPress={() => props.decreaseItem(i.id)}
                                   >
                                     <Ionicons name="remove-sharp" size={24} color="black" />
                                   </TouchableOpacity>                        
@@ -210,9 +198,9 @@ const MaterialTopTabView = (props) => {
 
         {type == "Information" && (
           <>
-          {data.infomation.map((i) => {
+          {data.infomation.map((i,index) => {
             return(
-              <View style={{flex:1,backgroundColor:R.colors.white,paddingVertical:10}}>
+              <View key={index} style={{flex:1,backgroundColor:R.colors.white,paddingVertical:10}}>
                 <View style={[
                   styles.row,
                   {justifyContent:"space-between",paddingHorizontal:15,paddingVertical:10}
@@ -334,4 +322,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   addCart,
   increaseItem,
+  decreaseItem
 })(MaterialTopTabView)

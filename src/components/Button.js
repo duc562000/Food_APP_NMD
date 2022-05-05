@@ -14,7 +14,16 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 
 
 const Button = (props) => {
-  const { title, onPress, containerStyle, txtStyle, backgroundColor,isIcon,iconName } = props;
+  const { 
+    title, 
+    onPress, 
+    containerStyle, 
+    txtStyle, 
+    backgroundColor,
+    isIcon,
+    iconName ,
+    disabled
+  } = props;
   return (
     <TouchableOpacity
       style={[
@@ -37,6 +46,7 @@ const Button = (props) => {
         { ...containerStyle },
       ]}
       onPress={onPress}
+      disabled = {disabled}
     >
       {isIcon ? 
       (

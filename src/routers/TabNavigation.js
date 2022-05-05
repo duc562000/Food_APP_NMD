@@ -11,11 +11,11 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 
 import Home from "../Screens/home/Home";
-import History from "../Screens/history/History";
 import Notification from "../Screens/notification/Notification";
 import Account from "../Screens/Account/Account";
 import Profile from "../Screens/Profile/Profile"
 import MyList from "../Screens/MyList/MyList";
+import Order from "../Screens/Order/Oder";
 
 const Tab = createBottomTabNavigator();
 
@@ -40,8 +40,8 @@ const TabNavigator = (props) => {
           }}
         />
         <Tab.Screen
-          name="HistoryScreen"
-          component={History}
+          name="OrderScreen"
+          component={Order}
           options={{
             tabBarLabel: "Order",
             tabBarIcon: ({ color, size }) => (

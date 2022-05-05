@@ -30,6 +30,16 @@ const images = {
   imgStarHalf:require("./images/star_half.png"),
   avtNam:require("./images/Sam_Worthington_2013.jpg"),
   avtNu:require("./images/1200px-Michelle_Rodriguez_by_Gage_Skidmore_2.jpeg"),
+  iconPaypal:require("./images/paypal.png"),
+  iconVisa:require("./images/visa.png"),
+  iconCash:require("./images/cash.png"),
+  iconAddCard:require("./images/add.png"),
+  iconRemove:require("./images/delete.png"),
+  iconOrder:require("./images/order.png"),
+  iconPaid:require("./images/paid.png"),
+  iconQrcode:require("./images/qr-code.png"),
+  creditCardIMG:require("./images/creditcard-Img.png")
+
 };
 
 export default images;

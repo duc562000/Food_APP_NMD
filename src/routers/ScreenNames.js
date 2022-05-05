@@ -12,6 +12,18 @@ export const MY_LIST_SCREEN = "MY_LIST_SCREEN";
 export const MY_PROFILE_SCREEN = "MY_PROFILE_SCREEN";
 export const CHANGE_PASS_SCREEN = "CHANGE_PASS_SCREEN";
 export const MY_CART_SCREEN = "MY_CART_SCREEN";
+export const CHECK_OUT_SCREEN = "CHECK_OUT_SCREEN";
+export const ORDER_SCREEN = "ORDER_SCREEN";
+export const PAYMENT_SETTING_SCREEN = "PAYMENT_SETTING_SCREEN";
+export const ADD_PAYMENT_METHOD = "ADD_PAYMENT_METHOD";
+export const PAY_PAL = "PAY_PAL";
+export const CREDIT_CARD = "CREDIT_CARD";
+
+
+
+
+
+
 
 
 

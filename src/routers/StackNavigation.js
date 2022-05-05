@@ -17,6 +17,12 @@ import MyList from "../Screens/MyList/MyList";
 import MyProfile from "../Screens/MyProfile/MyProfile";
 import ChangePass from "../Screens/Authen/ChangePass/ChangePass";
 import MyCart from "../Screens/MyCart/MyCart";
+import Checkout from "../Screens/CheckOut/Checkout";
+import Order from "../Screens/Order/Oder";
+import PaymentSetting from "../Screens/PaymentSetting/PaymentSetting";
+import AddPayment from "../Screens/PaymentSetting/AddPayMentMethod/AddPayment"
+import PayPal from "../Screens/PaymentSetting/MethodPayment/PayPal";
+import CreditCard from "../Screens/PaymentSetting/MethodPayment/CreditCard";
 
 const Stack = createStackNavigator();
 
@@ -42,7 +48,12 @@ function MyStack(props) {
       <Stack.Screen name={ScreenName.MY_PROFILE_SCREEN} component={MyProfile} />
       <Stack.Screen name={ScreenName.CHANGE_PASS_SCREEN} component={ChangePass} />
       <Stack.Screen name={ScreenName.MY_CART_SCREEN} component={MyCart} />
-
+      <Stack.Screen name={ScreenName.CHECK_OUT_SCREEN} component={Checkout} />
+      <Stack.Screen name={ScreenName.ORDER_SCREEN} component={Order} />
+      <Stack.Screen name={ScreenName.PAYMENT_SETTING_SCREEN} component={PaymentSetting} />
+      <Stack.Screen name={ScreenName.ADD_PAYMENT_METHOD} component={AddPayment} />
+      <Stack.Screen name={ScreenName.PAY_PAL} component={PayPal} />
+      <Stack.Screen name={ScreenName.CREDIT_CARD} component={CreditCard} />
 
     </Stack.Navigator>
   );

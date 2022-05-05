@@ -19,12 +19,12 @@ const ChangePassView = (props) => {
         console.log(data)
     }
   return (
-    <View style={{ flex: 1}}>
+    <View style={{ flex: 1,backgroundColor:R.colors.white}}>
             <Header
                 title='Change Password'
                 isBack={true}
                 styleTitle={{
-                    fontSize:25,
+                    fontSize:22,
                     textTransform:'none',
                     textAlign: "left",
                     paddingHorizontal:15,

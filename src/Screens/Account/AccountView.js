@@ -7,21 +7,12 @@ import Header from "../../components/Header/Header";
 import PickerDate from "../../components/Picker/PickerDate";
 import { showAlert, TYPE } from "../../components/DropdownAlert";
 import AntDesign from "react-native-vector-icons/AntDesign"
-import { CHANGE_PASS_SCREEN, MY_PROFILE_SCREEN } from "../../routers/ScreenNames";
+import { CHANGE_PASS_SCREEN, MY_PROFILE_SCREEN, PAYMENT_SETTING_SCREEN } from "../../routers/ScreenNames";
 
 
 const AccountView = (props) => {
   const navigation = useNavigation();
-  const dataProfile = {
-    myProfile:[
-      {
-        name:'Jack lane',
-        phone:'+1 2343434 821',
-        email:'jack@daswae.mail',
-        address:'9sh West stret New york'
-      }
-    ]
-  }
+  const {dataProfile} = props
   return (
     <View style={{ flex: 1,backgroundColor:R.colors.white }}>
       {dataProfile.myProfile.map((i)=>{
@@ -49,7 +40,10 @@ const AccountView = (props) => {
           <Text style={styles.txtGray}>Change Password</Text>
           <AntDesign name="right" size={20} color={R.colors.gray5b71} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity 
+          style={styles.btn}
+          onPress={() => navigation.navigate(PAYMENT_SETTING_SCREEN)}
+        >
           <Text style={styles.txtGray}>Payment Settings</Text>
           <AntDesign name="right" size={20} color={R.colors.gray5b71} />
         </TouchableOpacity>

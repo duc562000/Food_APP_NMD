@@ -8,7 +8,7 @@ const ModalEnableLocation = (props) => {
   return (
       <Modal
         backdropColor="transparent"
-        animationType="none"
+        animationType="slide"
         transparent={true}
         visible={modalVisible}
       >

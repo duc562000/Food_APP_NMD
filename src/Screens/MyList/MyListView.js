@@ -11,212 +11,119 @@ import FoodMenu from "../home/SmallComponents/FoodMenu";
 import FoodNearMe from "../home/SmallComponents/FoodNearMe";
 import FoodBreakfast from "../home/SmallComponents/FoodBreakFast";
 import Button from "../../components/Button";
+import { toggleHeart } from "../../actions/FavoritesAction";
+import { connect } from "react-redux";
+import { FoodTypeData } from "../home/Home";
+import { RESTAURANTDETAILSCREEN } from "../../routers/ScreenNames";
+import { useNavigation } from "@react-navigation/native";
 
 
 const MyListView = (props) => {
-  const historySearch = [
-    {
-      id:1,
-      name:'Hamsazda'
-    },
-    {
-      id:2,
-      name:'fdasfas'
-    },
-    {
-      id:3,
-      name:'asdsadsa'
-    },
-    {
-      id:4,
-      name:'weqweqw'
-    },
-    {
-      id:5,
-      name:'asdwqeqwewasda'
-    },
-  ]
   const {
-    FoodTypeData,
-    searchQuery,
-    onChangeSearch,
-    selectedFoodType,
-    OnChangFoodType
+    favotiteList,
+    search,
+    filterData,
+    serachFilter
   } = props
-  const [modalSeacrh, setModalSearch] = useState(false);
+  const navigate = useNavigation();
+  console.log(favotiteList)
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={{flex:1}}>
+    <ScrollView 
+      showsVerticalScrollIndicator={false} 
+      style={{flex:1,backgroundColor:R.colors.white}}
+    >
       <View style={{ flex: 1,backgroundColor:R.colors.white}}>
-        <View>
-            <Button
-              title={'Search'}
-              backgroundColor={R.colors.gray5}
-              containerStyle={{
+            <View style={{
+              flex:1,
+              marginHorizontal:15,
+              marginBottom:15,
+              paddingTop:60
+              }}>
+              <Searchbar
+                placeholder="Search"
+                onChangeText={(text) => serachFilter(text)}
+                value={search}
+                style={{
+                  backgroundColor:R.colors.gray5,
+                  borderWidth:0.1,
                   height:50,
-                  marginHorizontal:15,
-                  borderRadius:15,
-                  alignItems:'flex-start',
-                  marginTop:70,
-              }}
-              txtStyle={{
-                  color:R.colors.color777,
-                  fontWeight:'400',
-                  left:55
-              }}
-              isIcon ={true}
-              iconName = {'md-search-outline'}
-              onPress = {() => setModalSearch(true)}
-            />
-            <Modal
-              animationType="fade"
-              transparent={false}
-              visible={modalSeacrh}
-            >
-              <ScrollView>
-                <View style={styles.centeredView}>
-                  <View style={{marginHorizontal:15,marginBottom:15}}>
-                    <TouchableOpacity
-                      style={{ width: 35, height: 30,position:'absolute',bottom:10,left:-5 }}
-                      onPress={() => setModalSearch(!modalSeacrh)}
-                    >
-                      <Ionicons name="chevron-back-outline" size={26} color="black" />
-                    </TouchableOpacity>
-                    <Searchbar
-                      placeholder="Search"
-                      onChangeText={onChangeSearch}
-                      value={searchQuery}
-                      style={{
-                        marginLeft:35,
-                        backgroundColor:R.colors.gray5,
-                        borderWidth:0.1,
-                        height:50,
-                        borderRadius:15,shadowColor: "#000",
-                        shadowOffset: {
-                            width: 0,
-                            height: 2,
-                        },
-                        shadowOpacity: 0.25,
-                        shadowRadius: 3.84,
-                      }}
-                    />
-                  </View>
-                  <View>
-                    <View style={{
-                      flexDirection:'row',
-                      justifyContent:'space-between',
-                      paddingHorizontal:15,
-                      paddingVertical:15
-                      }}>
-                        <Text style={styles.txtGray}>🕒  Search history</Text>
-                        <TouchableOpacity>
-                          <Text style={[styles.txtGray,{fontSize:15}]}>Clear all</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <FlatList
-                      scrollEnabled={false}
-                      data={historySearch}
-                      pagingEnabled
-                      showsHorizontalScrollIndicator={false}
-                      keyExtractor={item => item.id}
-                      renderItem={({item,index}) => {
-                        return(
-                          <View style={{
-                            flexDirection:'row',
-                            alignItems:'center',
-                            justifyContent:'space-between',
-                            paddingHorizontal:15
-                            }}>
-                              <TouchableOpacity>
-                                <Text style={[styles.txt,{paddingVertical:10,fontWeight:"300"}]}>{item.name}</Text>
-                              </TouchableOpacity>
-                              <TouchableOpacity>
-                                <Ionicons style={{color:R.colors.color777}} name="close-outline" size={23} color="black" />
-                              </TouchableOpacity>
-                          </View>
-                        )
-                      }}
-                    />
-                    <Text style={styles.txtTitle}>Popular</Text>
-                    <FoodBreakfast
-                      data={FoodTypeData[1].menuBreakfast}
-                    />
-                  </View>
-                </View>
-              </ScrollView>
-            </Modal>
-            
-            <FlatList
-              data={FoodTypeData}
-              horizontal
-              pagingEnabled
-              scrollEnabled
-              snapToAlignment='center'
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={item => item.id}
-              renderItem={({item,index}) => {
-                  return(
-                      <View
-                        style={{flexDirection:'column',alignItems:"center",paddingVertical:20}}
+                  borderRadius:15,shadowColor: "#000",
+                  shadowOffset: {
+                      width: 0,
+                      height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+                }}
+              />
+            </View>
+            {search ? (
+              <>
+              {filterData.map((item,index) => (
+                  <View 
+                        key={index}
+                        style={{flexDirection:'row'}}
                       >
                         <TouchableOpacity
-                          style={[
-                            styles.btnType,
-                            {backgroundColor:selectedFoodType ?.id === item.id ? R.colors.colorMain : R.colors.gray4}
-                          ]}
+                          style={styles.btnFoodNearMe}
                           key={item.id} 
-                          onPress={() => OnChangFoodType(item)}
+                          onPress={() => navigate.navigate(RESTAURANTDETAILSCREEN,{item})}
                         >
-                          <Image 
-                          style={[
-                            styles.img,
-                            {tintColor:selectedFoodType ?.id === item.id ? R.colors.white : R.colors.black}
-                          ]} 
-                          source={item.img}/>
+                          <View>
+                            <Image 
+                            style={styles.imgNearmeFood} 
+                            source={item.img}/>
+                          </View>
                         </TouchableOpacity>
-                        <Text style={styles.txt}>{item.type}</Text>
-                      </View>
-                )
-              }}
-            />
-            <FlatList
-            horizontal
-            scrollEnabled={true}
-            data={selectedFoodType?.menuNearMe[0]?.food}
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={item => item.id}
-            renderItem={({item,index}) => {
-                return(
-                    <View
-                        style={{
-                            backgroundColor:R.colors.white,
-                            flex:1,
-                            alignItems:'center',
-                            paddingHorizontal:15
-                        }}
-                    >
-                      <View>
-                        <Image
-                        style={styles.imgNearmeFood} 
-                        source={item.img}/>
-                      </View>
-                      <View style={{
-                                flex:1,
-                              }}>
                         <View>
-                          <Text style={[styles.txtweight,{paddingVertical:8}]}>{item.type}</Text>
-                          <Text style={styles.txtPrice}>${item.price}</Text>
+                          <Text style={[styles.txtweight,{paddingVertical:10}]}>{item.type}</Text>
+                          <Text style={[styles.txtGray,{paddingVertical:3}]}>📍 {item.address}</Text>
+                          <Text style={[styles.txtGray,{paddingVertical:3}]}>🕒 {item.time} min · {item.km}km</Text>
+                          <View style={{paddingVertical:5}}>
+                            <StarReview rate={item.rate}/>
+                          </View>
+                        </View>
+                      </View>
+                
+              ))
+              }
+              </>
+            ) : (
+              <>
+                {favotiteList.map((item,index) => {
+              return item.favorite == true && (
+                <View 
+                      key={index}
+                      style={{flexDirection:'row'}}
+                    >
+                      <TouchableOpacity
+                        style={styles.btnFoodNearMe}
+                        key={item.id} 
+                        onPress={() => navigate.navigate(RESTAURANTDETAILSCREEN,{item})}
+                      >
+                        <View>
+                          <Image 
+                          style={styles.imgNearmeFood} 
+                          source={item.img}/>
+                        </View>
+                      </TouchableOpacity>
+                      <View>
+                        <Text style={[styles.txtweight,{paddingVertical:10}]}>{item.type}</Text>
+                        <Text style={[styles.txtGray,{paddingVertical:3}]}>📍 {item.address}</Text>
+                        <Text style={[styles.txtGray,{paddingVertical:3}]}>🕒 {item.time} min · {item.km}km</Text>
+                        <View style={{paddingVertical:5}}>
+                          <StarReview rate={item.rate}/>
                         </View>
                       </View>
                     </View>
               )
-                      }}
-          />
-            <FoodNearMe
-              data={selectedFoodType?.menuNearMe}
-            />
+            })
+            }
+              </>
+            )
+            }
+            
           </View>
-        </View>
     </ScrollView>
   );
 };
@@ -287,8 +194,8 @@ const styles = StyleSheet.create({
     paddingVertical:25
   },
   imgNearmeFood:{
-    width:90,
-    height:90,
+    width:100,
+    height:100,
     borderRadius:20,
   },
   txtweight:{
@@ -300,6 +207,14 @@ const styles = StyleSheet.create({
     fontWeight:'600',
     color:R.colors.colorMain
   },
+  btnFoodNearMe:{
+    marginHorizontal:15,
+    width:100,
+    height:100,
+    borderRadius:20,
+    marginVertical:10,
+    backgroundColor:'#ccc'
+},
 })
 
-export default MyListView;
+export default MyListView

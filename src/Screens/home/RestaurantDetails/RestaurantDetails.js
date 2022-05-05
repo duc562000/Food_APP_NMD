@@ -2,23 +2,28 @@ import React,{useState} from "react";
 import { useNavigation } from "@react-navigation/native";
 import RestaurantDetailsView from "./RestaurantDetailView";
 import { TABNAVIGATOR } from "../../../routers/ScreenNames";
+import { toggleHeart } from "../../../actions/FavoritesAction";
+import { connect } from "react-redux";
 
 const RestaurantDetails = (props) => {
     const navigate = useNavigation();
-      const onSubmit = (data) => {
-      navigate.navigate(TABNAVIGATOR);
-      
-      console.log(data);     
-      };
-      const [reaction,setReaction] = useState(false)
-      
+    const favotiteList = props.FavoriteProduct.favotiteList
+    const {toggleHeart} = props
     return(
         <RestaurantDetailsView
-            reaction={reaction}
-            setReaction={setReaction}
             dataRestaurant = {props.route.params.item}
+            favotiteList={favotiteList}
+            toggleHeart = {toggleHeart}
         />
     );
 }
 
-export default RestaurantDetails;
+const mapStateToProps = (state) => {
+    return {
+        FavoriteProduct: state.FavoriteReducer,
+    };
+  };
+  
+  export default connect(mapStateToProps, {
+    toggleHeart
+  })(RestaurantDetails)

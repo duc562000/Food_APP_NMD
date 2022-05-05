@@ -3,7 +3,6 @@ import MyProfileView from './MyProfileView';
 
 const MyProfile = (props) => {
     const data = props.route.params
-    console.log(data)
     return <MyProfileView data={data}/>;
 };
 

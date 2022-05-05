@@ -3,15 +3,13 @@ import { Controller, useForm } from "react-hook-form";
 import { View,Text,Image,StyleSheet,StatusBar,Animated,FlatList,TouchableOpacity, ImageBackground,ScrollView } from "react-native";
 import R from "../../../assets/R";
 import { FORGOTPASSSCREEN, LOGINSCREEN, TABNAVIGATOR } from "../../../routers/ScreenNames";
-import TextForm from "../../../components/Input/InputForm";
-import Button from "../../../components/Button";
-import Entypo from "react-native-vector-icons/Entypo"
-import Header from "../../../components/Header/Header";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons"
 import StarReview from "../../../components/StarReview/StarReview";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import MaterialTopTab from "../../home/RestaurantDetails/MaterialTopTab/MaterialTopTab"
+
+
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -21,7 +19,7 @@ const RestaurantDetailsView = (props) => {
         handleSubmit,
         formState: { errors },
       } = useForm();
-    const {dataRestaurant,reaction,setReaction} = props
+    const {dataRestaurant,toggleHeart,favotiteList} = props
     const navigate = useNavigation();
     return (
         <>
@@ -47,9 +45,9 @@ const RestaurantDetailsView = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                         style={styles.iconStyle}
-                        onPress={() => setReaction(!reaction)}
+                        onPress={() => toggleHeart(dataRestaurant)}
                         >
-                            <Ionicons name="heart" size={30} color={reaction ? "red" : "white"} />
+                            <Ionicons name="heart" size={30} color={favotiteList[dataRestaurant.id - 1]?.favorite ? "red" : "white"} />
                         </TouchableOpacity>
                         <TouchableOpacity
                         style={styles.iconStyle}
@@ -106,4 +104,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default RestaurantDetailsView;
+
+export default RestaurantDetailsView

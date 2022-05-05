@@ -1,20 +1,17 @@
 import React from "react";
 import { View, Text, StyleSheet,TouchableOpacity,Image } from "react-native";
-import R from "../../assets/R";
-import Header from "../../components/Header/Header";
-import Entypo from "react-native-vector-icons/Entypo"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import { useNavigation } from "@react-navigation/native";
-import { ADD_PAYMENT_METHOD } from "../../routers/ScreenNames";
+import Header from "../../../components/Header/Header";
+import R from "../../../assets/R";
 
 
-
-const PaymentSettingView = (props) => {
+const PayPal = (props) => {
   const navigate = useNavigation()
   return (
     <View style={{ flex: 1,backgroundColor:R.colors.white}}>
             <Header
-                title='Payment Setting'
+                title='Add Pay Pal'
                 isBack={true}
                 styleTitle={{
                     fontSize:22,
@@ -43,43 +40,9 @@ const PaymentSettingView = (props) => {
                             />
                             <Text style={styles.txtPayment}>Paypal</Text>
                         </View>
-                        <View style={styles.row}>
-                          <Text style={styles.txt}>laura1244@gmail.com</Text>
-                          <AntDesign name="right" size={15} color={R.colors.gray5b71} />
-                        </View>
-                        
-                        
+                        <Text style={styles.txt}>laura1244@gmail.com</Text>
+ 
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.btnChoosePayment}
-                        // onPress={() => onSelecteMethod(2)}
-                    >
-                        <View style={{flexDirection:'row',alignItems:'center'}}>
-                            <Image
-                                style={styles.icon}
-                                source={R.images.iconVisa}
-                            />
-                            <Text style={styles.txtPayment}>Credit card</Text>
-                        </View>
-                        <View style={styles.row}>
-                          <Text style={styles.txt}>43234 *** **** 3232</Text>
-                          <AntDesign name="right" size={15} color={R.colors.gray5b71} />
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.btnChoosePayment}
-                        onPress={() => navigate.navigate(ADD_PAYMENT_METHOD)}
-                    >
-                        <View style={styles.row}>
-                            <Image
-                                style={styles.icon}
-                                source={R.images.iconAddCard}
-                            />
-                            <Text style={styles.txtPayment}>Add new payment method</Text>
-                        </View>
-                        <Entypo name="plus" size={24} color={R.colors.gray} />
-                    </TouchableOpacity>
-                    
             </View>
     </View>
   );
@@ -183,4 +146,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default PaymentSettingView;
+export default PayPal;

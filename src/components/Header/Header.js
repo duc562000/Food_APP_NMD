@@ -18,7 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Header = (props) => {
-  const { title, isBack,containerStyle,contaierSafeAreView,colorIcon,styleTitle } = props;
+  const { title, isBack,containerStyle,contaierSafeAreView,colorIcon,styleTitle,isDot } = props;
   const navigate = useNavigation();
   return (
     <>
@@ -35,7 +35,7 @@ const Header = (props) => {
             style={{ width: 35, height: 30 }}
             onPress={() => navigate.goBack()}
           >
-            <Ionicons name="chevron-back-outline" size={30} color={colorIcon ? colorIcon : "black"} />
+            <Ionicons name="chevron-back-outline" size={25} color={colorIcon ? colorIcon : "black"} />
           </TouchableOpacity>
         ) : (
           <View style={{ width: 35, height: 30 }} />
@@ -74,6 +74,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 2,
     elevation: 1,
+    borderBottomWidth:0.5,
+    borderBottomColor:R.colors.gray3
   },
   txtTitle: {
     flex: 1,
