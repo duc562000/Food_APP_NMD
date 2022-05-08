@@ -2,8 +2,8 @@ import React from 'react';
 import MyProfileView from './MyProfileView';
 
 const MyProfile = (props) => {
-    const data = props.route.params
-    return <MyProfileView data={data}/>;
+    const dataUser = props.route.params
+    return <MyProfileView data={dataUser}/>;
 };
 
 export default MyProfile;

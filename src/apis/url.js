@@ -1,10 +1,6 @@
-export const root = 'https://student-vnua.herokuapp.com/';
+export const root = 'https://www.mecallapi.com/api/';
 export default {
-  urllogin: root + 'api/users/student-login',
-  urlListNews: root + 'api/news',
-  urlListScholarships: root + 'api/scholarships',
-  urlListBustle: root + 'api/hoatdongs',
-  urlListUsers: root + 'api/users/get-list-users',
-  urlListMessage: root + 'api/messages',
-  urlChangePassword: root + 'api/users/change-password',
+  urllogin: root + 'login',
+  urlUserInfo:"https://6273f3ca3d2b510074254a36.mockapi.io/userInfo",
+  urlEditCard:"https://6273f3ca3d2b510074254a36.mockapi.io/userInfo/1"
 };

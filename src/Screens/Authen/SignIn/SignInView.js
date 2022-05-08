@@ -8,6 +8,8 @@ import Button from "../../../components/Button";
 import Entypo from "react-native-vector-icons/Entypo"
 import Header from "../../../components/Header/Header";
 import { useNavigation } from "@react-navigation/native";
+import { loginApi } from "../../../apis/Functions/users";
+import AsyncStorage from "@react-native-community/async-storage";
 
 
 
@@ -19,6 +21,27 @@ const SignInView = (props) => {
       } = useForm();
     const {onSubmit} = props
     const navigate = useNavigation();
+    const [username,setUsername] = useState('')
+    const [password,setPassword] = useState('')
+    // const onSubmit = async () => {
+    //     const response = await loginApi({
+    //         username,
+    //         password
+    //       });
+    //       if ('accessToken' in response) {
+    //         console.log("Success", response.message, "success", {
+    //           buttons: false,
+    //           timer: 2000,
+    //         })
+    //         .then((value) => {
+    //           AsyncStorage.setItem('accessToken', response['accessToken']);
+    //           AsyncStorage.setItem('user', JSON.stringify(response['user']));
+    //           console.log(value)
+    //         });
+    //       } else {
+    //         console.log("Failed", response.message, "error");
+    //       }
+    // }
     return (
         <>
             <StatusBar barStyle="dark-content"/>
@@ -52,8 +75,12 @@ const SignInView = (props) => {
                         textColor={R.colors.black}
                         placeholder={'Username'}
                         onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
+                        onChangeText={(username) => {
+                            onChange(username)
+                            setUsername(username)
+                        }
+                        }
+                        value={username}
                         error={errors.username}
                         containerStyle ={{
                             width:320,
@@ -86,8 +113,12 @@ const SignInView = (props) => {
                         title={"password"}
                         placeholder={"Enter Password"}
                         onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
+                        onChangeText={(password) => {
+                            onChange(password)
+                            setPassword(password)
+                        }
+                        }
+                        value={password}
                         isPassword={true}
                         error={errors.password}
                         containerStyle ={{

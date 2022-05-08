@@ -16,6 +16,7 @@ const MyProfileView = (props) => {
     const onSubmit = (data) => {
         console.log(data)
     }
+    const data = props
     return (
         <View style={{ flex: 1,backgroundColor:R.colors.white}}>
             <Header
@@ -29,12 +30,9 @@ const MyProfileView = (props) => {
                     fontWeight:'500'
                 }}
             />
-            {props.data.map((i)=>{
-            return(
-                <>
                 <View style={{alignItems:'center',flex:0.3,paddingTop:20}}>
                     <Image style={styles.img} source={R.images.avtNam}/>
-                    <Text style={styles.txtTitle}>{i.name}</Text>
+                    <Text style={styles.txtTitle}>{data.data.name}</Text>
                     <Text style={styles.txtGrayPhone}>Change photo</Text>
                 </View>
                 <View style={{flex:0.7}}>
@@ -72,7 +70,7 @@ const MyProfileView = (props) => {
                             />
                         )}
                         name="name"
-                        defaultValue={i.name}
+                        defaultValue={data.data.name}
                         />
                     </View>
                     <View style={styles.row}>
@@ -109,7 +107,7 @@ const MyProfileView = (props) => {
                             />
                         )}
                         name="phoneNumber"
-                        defaultValue={i.phone}
+                        defaultValue={data.data.phonenumber}
                         />
                     </View>
                     <View style={styles.row}>
@@ -146,7 +144,7 @@ const MyProfileView = (props) => {
                             />
                         )}
                         name="email"
-                        defaultValue={i.email}
+                        defaultValue={data.data.email}
                         />
                     </View>
                     <View style={styles.row}>
@@ -183,7 +181,7 @@ const MyProfileView = (props) => {
                             />
                         )}
                         name="address"
-                        defaultValue={i.address}
+                        defaultValue={data.data.address}
                         />
                     </View>
                     <Button
@@ -202,10 +200,6 @@ const MyProfileView = (props) => {
                         onPress={handleSubmit(onSubmit)}
                     />
                 </View> 
-                </>
-            )
-            })}
-            
         </View>
     );
 };

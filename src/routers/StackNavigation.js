@@ -23,6 +23,7 @@ import PaymentSetting from "../Screens/PaymentSetting/PaymentSetting";
 import AddPayment from "../Screens/PaymentSetting/AddPayMentMethod/AddPayment"
 import PayPal from "../Screens/PaymentSetting/MethodPayment/PayPal";
 import CreditCard from "../Screens/PaymentSetting/MethodPayment/CreditCard";
+import CreditCardDetails from "../Screens/PaymentSetting/MethodPayment/CreditCardDetails";
 
 const Stack = createStackNavigator();
 
@@ -33,7 +34,7 @@ function MyStack(props) {
         headerStatusBarHeight: 0,
       }}
       headerMode={"none"}
-      initialRouteName={ScreenName.TABNAVIGATOR}
+      initialRouteName={ScreenName.INTROFOODSCREEN}
     >
       <Stack.Screen name={ScreenName.LOGINSCREEN} component={Login} />
       <Stack.Screen name={ScreenName.TABNAVIGATOR} component={TabNavigator} />
@@ -54,6 +55,8 @@ function MyStack(props) {
       <Stack.Screen name={ScreenName.ADD_PAYMENT_METHOD} component={AddPayment} />
       <Stack.Screen name={ScreenName.PAY_PAL} component={PayPal} />
       <Stack.Screen name={ScreenName.CREDIT_CARD} component={CreditCard} />
+      <Stack.Screen name={ScreenName.CREDIT_CARD_DETAILS} component={CreditCardDetails} />
+
 
     </Stack.Navigator>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View,Image,TouchableOpacity } from "react-native";
 import R from "../../assets/R";
 import { getFontXD } from "../../Config/Functions";
@@ -8,27 +8,34 @@ import PickerDate from "../../components/Picker/PickerDate";
 import { showAlert, TYPE } from "../../components/DropdownAlert";
 import AntDesign from "react-native-vector-icons/AntDesign"
 import { CHANGE_PASS_SCREEN, MY_PROFILE_SCREEN, PAYMENT_SETTING_SCREEN } from "../../routers/ScreenNames";
+import { userInfoApi } from "../../apis/Functions/users";
 
 
 const AccountView = (props) => {
   const navigation = useNavigation();
   const {dataProfile} = props
+  const [dataUser,setDataUser] = useState('')
+  useEffect(() => {
+    getDataUser();
+  }, []);
+  const getDataUser = async () => {
+    let response = await userInfoApi({
+    });
+    response.data.map((item,index) => setDataUser(item))
+    console.log(dataUser)
+  };
+  
   return (
     <View style={{ flex: 1,backgroundColor:R.colors.white }}>
-      {dataProfile.myProfile.map((i)=>{
-        return(
         <View style={{alignItems:'center',flex:0.3,paddingTop:100,paddingBottom:30}}>
           <Image style={styles.img} source={R.images.avtNam}/>
-          <Text style={styles.txtTitle}>{i.name}</Text>
-          <Text style={styles.txtGrayPhone}>{i.phone}</Text>
+          <Text style={styles.txtTitle}>{dataUser.name}</Text>
+          <Text style={styles.txtGrayPhone}>{dataUser.phonenumber}</Text>
         </View>
-        )
-      })
-      }
       <View style={{flex:0.7}}>
         <TouchableOpacity 
           style={styles.btn}
-          onPress={() => navigation.navigate(MY_PROFILE_SCREEN,dataProfile.myProfile)}
+          onPress={() => navigation.navigate(MY_PROFILE_SCREEN,dataUser)}
         >
           <Text style={styles.txtGray}>My profile</Text>
           <AntDesign name="right" size={20} color={R.colors.gray5b71} />
@@ -42,7 +49,7 @@ const AccountView = (props) => {
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.btn}
-          onPress={() => navigation.navigate(PAYMENT_SETTING_SCREEN)}
+          onPress={() => navigation.navigate(PAYMENT_SETTING_SCREEN,dataUser)}
         >
           <Text style={styles.txtGray}>Payment Settings</Text>
           <AntDesign name="right" size={20} color={R.colors.gray5b71} />

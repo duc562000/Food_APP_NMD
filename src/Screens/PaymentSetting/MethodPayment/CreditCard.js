@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { View, Text,Image, StyleSheet } from "react-native";
+import { editCard, loginApi } from "../../../apis/Functions/users";
 import R from "../../../assets/R";
 import Button from "../../../components/Button";
 import Header from "../../../components/Header/Header";
 import TextForm from "../../../components/Input/InputForm"
+import { PAYMENT_SETTING_SCREEN } from "../../../routers/ScreenNames";
 
 
 const CreditCard = (props) => {
@@ -13,14 +16,23 @@ const CreditCard = (props) => {
         handleSubmit,
         formState: { errors },
     } = useForm();
-
+    const navigate = useNavigation()
     const [txtBankName,setTxtBankName] = useState('')
     const [txtYourName,setTxtYourName] = useState('')
     const [txtCardNumber,setTxtCardNumber] = useState('')
     const [txtDate,setTxtDate] = useState('')
     const [txtCvv,setTxtCvv] = useState('')
-    const onSubmit = (data) => {
-        console.log(data)
+    const onSubmit = async (data) => {
+        let response = await editCard({
+            "creditcard": {
+                "bankname": data.bankName,
+                "youname": data.yourName,
+                "cardnumber": data.cardNumber,
+                "date": data.date,
+                "cvv": data.cvv
+              }
+        })
+        navigate.navigate(PAYMENT_SETTING_SCREEN)
     }
   return (
     <View style={{ flex: 1,backgroundColor:R.colors.white}}>

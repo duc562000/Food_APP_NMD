@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet,TouchableOpacity,Image } from "react-native";
 import R from "../../assets/R";
 import Header from "../../components/Header/Header";
 import Entypo from "react-native-vector-icons/Entypo"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import { useNavigation } from "@react-navigation/native";
-import { ADD_PAYMENT_METHOD } from "../../routers/ScreenNames";
+import { ADD_PAYMENT_METHOD, CREDIT_CARD_DETAILS } from "../../routers/ScreenNames";
+import { loginApi } from "../../apis/Functions/users";
 
 
 
 const PaymentSettingView = (props) => {
+  console.log(props.dataUser)
+  const dataUser = props.dataUser
   const navigate = useNavigation()
   return (
     <View style={{ flex: 1,backgroundColor:R.colors.white}}>
@@ -43,16 +46,11 @@ const PaymentSettingView = (props) => {
                             />
                             <Text style={styles.txtPayment}>Paypal</Text>
                         </View>
-                        <View style={styles.row}>
-                          <Text style={styles.txt}>laura1244@gmail.com</Text>
-                          <AntDesign name="right" size={15} color={R.colors.gray5b71} />
-                        </View>
-                        
-                        
+                          <Text style={styles.txt}>{dataUser.paypal}</Text>   
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.btnChoosePayment}
-                        // onPress={() => onSelecteMethod(2)}
+                        onPress={() => navigate.navigate(CREDIT_CARD_DETAILS,{dataUser})}
                     >
                         <View style={{flexDirection:'row',alignItems:'center'}}>
                             <Image
@@ -62,7 +60,7 @@ const PaymentSettingView = (props) => {
                             <Text style={styles.txtPayment}>Credit card</Text>
                         </View>
                         <View style={styles.row}>
-                          <Text style={styles.txt}>43234 *** **** 3232</Text>
+                          <Text style={styles.txt}>{dataUser.creditcard.cardnumber}</Text>
                           <AntDesign name="right" size={15} color={R.colors.gray5b71} />
                         </View>
                     </TouchableOpacity>
